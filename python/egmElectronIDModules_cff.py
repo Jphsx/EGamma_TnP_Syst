@@ -21,7 +21,16 @@ def setIDs(process, options):
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
-        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff'
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Summer16_SUSYveryLoose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Summer16_SUSYloose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Summer16_SUSYtight_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Fall17_SUSYveryLoose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Fall17_SUSYloose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Fall17_SUSYtight_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Autumn18_SUSYveryLoose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Autumn18_SUSYloose_cff',
+        'EgammaAnalysis.TnPTreeProducer.Identification.mvaEleID_Autumn18_SUSYtight_cff'
        ]
 
     ### add only miniAOD supported IDs
@@ -91,6 +100,16 @@ def setIDs(process, options):
       addNewProbeModule(probeSequence, 'MVA94X%sisoV2' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-%s' % wp)
 
     addNewProbeModule(probeSequence, 'MVA94XwpHZZisoV2', 'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ')
+
+    for wp in ['Summer16', 'Fall17', 'Autumn18']:
+        addNewProbeModule(probeSequence, 'MVA94X%sSUSYveryLoose' %wp,   'egmGsfElectronIDs:mvaEleID-%s-SUSYveryLoose' %wp)
+        addNewProbeModule(probeSequence, 'MVA94X%sSUSYloose' %wp,   'egmGsfElectronIDs:mvaEleID-%s-SUSYloose' %wp)
+        addNewProbeModule(probeSequence, 'MVA94X%sSUSYtight' %wp,   'egmGsfElectronIDs:mvaEleID-%s-SUSYtight' %wp)
+
+
+    #addNewProbeModule(probeSequence, 'SUSYtightMVAsummer16', 'electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2RawValues')
+    #addNewProbeModule(probeSequence, 'SUSYtightMVAfall17',   'electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values')
+    #addNewProbeModule(probeSequence, 'SUSYtightMVAautumn18', 'electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2RawValues')
 
     #
     # For cut based 94X V2, also check partial cuts

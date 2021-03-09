@@ -1,0 +1,77 @@
+
+
+//zdatatrigtest_201.root
+//
+#include<string>
+#include "TFile.h"
+#include "TTree.h"
+
+int main(int argc, char *argv[]){
+//void addBronze(std::string iFileName="zdatatrigtest_201.root"){
+
+    std::string iFileName = std::string(argv[1]);
+    TFile *iFile = TFile::Open(iFileName.c_str());
+ //   TTreeReader myReader("tpTree/fitter_tree", iFile);
+ //   TTreeReaderValue<Float_t> id(myReader, "AbsPFIso_All");
+ //   TTreeReaderValue<Float_t> mini(myReader, "miniIsoAll");
+ //   TTreeReaderValue<Int_t> pf(myReader, "Medium");
+  
+   // std::string iFileName = std::string(argv[1]);
+
+    TTree  &t = * (TTree *) iFile->Get("tnpEleIDs/fitter_tree");
+    Int_t passEleVeryLoose;
+    Float_t el_abseta, el_pt, el_dxy, el_dz, el_sip;
+    Float_t el_miniIsoAll_fall17, el_relIso03_dB;
+    Float_t absPFIso_All,miniIsoAll;
+    //Int_t Medium;
+    t.SetBranchAddress("el_relIso03_dB",&el_relIso03_dB);
+    t.SetBranchAddress("el_miniIsoAll_fall17",&el_miniIsoAll_fall17);
+    t.SetBranchAddress("el_pt",&el_pt);
+    t.SetBranchAddress("el_abseta",&el_abseta);
+    t.SetBranchAddress("el_dxy",&el_dxy);
+    t.SetBranchAddress("el_dz",&el_dz);
+    t.SetBranchAddress("el_sip",&el_sip);
+
+    //t.SetBranchAddress("Medium",&Medium);
+    TFile *oFile = new TFile("tp_Iso.root", "RECREATE");
+    oFile->mkdir("tpTree")->cd();
+    TTree *tOut = t.CloneTree(0);
+    //int Bronze=0;
+    tOut->Branch("passEleVeryLoose", &passEleVeryLoose, "passEleVeryLoose/I");
+    tOut->Branch("absPFIso_All", &absPFIso_All, "absPFIso_All/F");
+    tOut->Branch("miniIsoAll", &miniIsoAll, "miniIsoAll/F");
+    
+   // while (myReader.Next()) {
+     for(int i=0, n= t.GetEntries(); i< n; ++i){
+         t.GetEntry(i);
+	 absPFIso_All = el_relIso03_dB*el_pt;
+	 miniIsoAll = el_miniIsoAll_fall17*el_pt;
+	 if(el_pt > 3. && el_abseta < 2.4 && fabs(el_dxy) < 0.05 && fabs(el_dz) < 0.1 && absPFIso_All < (20.+300./el_pt) && el_sip < 8.)
+	   passEleVeryLoose = 1;
+	 else passEleVeryLoose = 0;
+	 
+	 /*
+	 if(Medium<1 || miniIsoAll >4 || AbsPFIso_All>4 ){
+	     Bronze=1;
+	 }
+	 else{
+ 	     Bronze=0;
+	     }*/
+
+	tOut->Fill();
+     }         
+ 
+//      if( *id<1 || *mini>4 || *pf>4 ){
+//	Bronze=1;
+  //    }
+   //   else{
+//	Bronze=0;
+ //     }
+ //          tOut->Fill();
+//   }
+//   tOut->Write();
+   tOut->AutoSave();
+  // iFile->Close();
+   oFile->Close();
+
+}

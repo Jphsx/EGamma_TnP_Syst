@@ -4,15 +4,16 @@ import os
 #
 # Example script to submit TnPTreeProducer to crab
 #
-submitVersion = "2020-##-##" # add some date here
+submitVersion = "2020-06-10" # add some date here
 doL1matching  = False
 
-defaultArgs   = ['doEleID=True','doPhoID=True','doTrigger=True']
-mainOutputDir = '/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
+defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True']
+#mainOutputDir = '/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
+mainOutputDir = './crabOut/'
 
 # Logging the current version of TnpTreeProducer here, such that you can find back what the actual code looked like when you were submitting
-os.system('mkdir -p /eos/cms/%s' % mainOutputDir)
-os.system('(git log -n 1;git diff) &> /eos/cms/%s/git.log' % mainOutputDir)
+#os.system('mkdir -p %s' % mainOutputDir)
+#os.system('(git log -n 1;git diff) &> %s/git.log' % mainOutputDir)
 
 
 #
@@ -97,7 +98,7 @@ def submitWrapper(requestName, sample, era, extraParam=[]):
 # Here the default data/MC for UL and rereco are given (taken based on the release environment)
 # If you would switch to AOD, don't forget to add 'isAOD=True' to the defaultArgs!
 #
-from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
+'''from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
 if isReleaseAbove(10,6):
   era       = 'UL2017'
   submitWrapper('Run2017B', '/SingleElectron/Run2017B-09Aug2019_UL2017-v1/MINIAOD', era)
@@ -156,3 +157,7 @@ else:
   submitWrapper('DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era)
   submitWrapper('DY_NLO', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era)
   submitWrapper('DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era)
+'''
+era = '2017'
+submitWrapper('DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/\
+MINIAODSIM', era)

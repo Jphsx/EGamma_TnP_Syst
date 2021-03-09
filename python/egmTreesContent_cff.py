@@ -102,7 +102,7 @@ EleProbeVariablesToStore = cms.PSet(
     #added for VHbbEIso
     el_sumPUPt       = cms.string("pfIsolationVariables().sumPUPt"),
     el_relIso03_dB   = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
-
+    el_absIso03_dB   = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) "),
     # tracker Variabels
     el_tk_pt        = cms.string("gsfTrack().ptMode"),
     el_tk_eta       = cms.string("gsfTrack().etaMode"),
@@ -211,6 +211,7 @@ TagVariablesToStore = cms.PSet(
     Ele_IsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
     Ele_noIsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values"), 
     Ele_IsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2Values"),
+
     )
 
 CommonStuffForGsfElectronProbe = cms.PSet(
